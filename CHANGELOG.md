@@ -1,5 +1,69 @@
 ## Version History
 
+## 1.2.27
+
+* Add GraalPython 21.1.0 (#1882)
+* Add CPython 3.10.0a7 (#1880)
+* Docs(README): fix info about version-file separator (#1874)
+* List versions starting with a dot (#1350)
+* Feat: support (skip) commented lines in version-file (#1866)
+* pypy3.7-7.3.4 (#1873)
+* Create miniforge3-4.10 (#1868)
+* Add CPython 3.9.4 (#1865)
+
+## 1.2.26
+
+* Add CPython 3.9.4 (#1865)
+
+## 1.2.25
+
+* bpo-43631: update to openssl 1.1.1k (#1861)
+* Add CPython 3.9.3 and 3.8.9 (#1859)
+* Add micropython 1.14 (#1858)
+* Shell detect improvements (#1835)
+* Test(init): remove misleading detect from parent shell case arg (#1856)
+* Add GraalPython 21.0.0 (#1855)
+
+## 1.2.24
+
+* GitHub Actions: Add $PYENV_ROOT/shims to $PATH (#1838)
+* Add Python 3.10.0a6 (#1839)
+* Remove the "Using script's directory as PYENV_DIR if shim is invoked with a script argument" feature (#1814)
+* Update GET_PIP_URL (#1844)
+* GitHub Action to build Python versions on Ubuntu (#1794)
+* Make work in nounset (-u) mode (#1786)
+* Update miniforge3-4.9.2 (#1834)
+* Added aarch64 for Linux in anaconda_architecture() (#1833)
+* Hook script to add latest suffix for install command (#1831)
+* Fix error link (#1832)
+* Clarify proxy variable names in readme (#1830)
+* Travis CI: Add Xcode 12 on macOS 10.15.5 (#1708)
+* Added --nosystem argument (#1829)
+* Add CPython 3.8.8 (#1825)
+* Add CPython 3.9.2 (#1826)
+* Add manpage (#1790)
+
+## 1.2.23
+
++ python-build: Add CPython v3.7.10 (#1818)
++ python-build: Add CPython v3.6.13 (#1817)
+* python-build: Add PyPy 3.7-c-jit-latest (#1812)
+* python-build: Add PyPy 3.7 (#1718, #1726, #1780)
+* python-build: Add miniconda3 4.9.2 (#1763)
+* python-build: Add miniconda3 4.8.3 (#1763)
+* python-build: Add miniconda3 4.8.2 (#1763)
+* python-build: Add Miniforge3-4.9.2 (#1782)
+* python-build: Fix download links for some PyPy and Stackless versions (#1692)
+* python-build: Add PYENV_DEBUG option (#1806)
+* python-build: Fix get-pip which dropped support for legacy Python (#1793)
+* pyenv-help: Fix `sed: RE error: illegal byte sequence` (#1714)
+* pyenv-versions: Fix not printing asterisk for current version in Bash 3 (#1815)
+* pyenv-prefix: "system" python - support cases where python3 is in PATH but not python (#1655)
+* pyenv-which: Added fallback to system executable (#1797)
+* pyenv-rehash: Use associative arrays for better performance on bash >= 4 (#1749)
+* pyenv-rehash: Try to sleep in 0.1 sec steps when acquiring lock (#1798)
+* pyenv: Use a better PS4 as recommended by Bash Hackers Wiki (#1810)
+
 ## 1.2.22
 
 + python-build: Add LDFLAGS for zlib on macOS >= 1100 (#1711)

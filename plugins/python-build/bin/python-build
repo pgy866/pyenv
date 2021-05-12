@@ -805,7 +805,7 @@ build_package_standard() {
 }
 
 build_package_autoconf() {
-  { autoconf
+  { autoreconf
   } >&4 2>&1
 }
 
@@ -851,12 +851,21 @@ build_package_jython_builder() {
 }
 
 build_package_pyston() {
-  mkdir -p "${PREFIX_PATH}/"
-  cp -fR . "${PREFIX_PATH}/"
-  chmod +x "${PREFIX_PATH}/"pyston
-  # FIXME ugly hack below adapted from
-  # https://github.com/dropbox/pyston/blob/master/docker/pyston/Dockerfile
-  ( cd "${PREFIX_PATH}/" && ./pyston virtualenv/virtualenv.py . )
+  # currently supported version 2.2 and upper
+  build_package_copy
+  mkdir -p "${PREFIX_PATH}/bin" "${PREFIX_PATH}/lib"
+  local bin
+  shopt -s nullglob
+  for bin in "bin/"*; do
+    if [ -f "${bin}" ] && [ -x "${bin}" ] && [ ! -L "${bin}" ]; then
+      case "${bin##*/}" in
+      "pyston"* )
+        ( cd "${PREFIX_PATH}/bin" && ln -fs "${bin##*/}" "python" )
+        ;;
+      esac
+    fi
+  done
+  shopt -u nullglob
 }
 
 build_package_ironpython() {
@@ -1006,6 +1015,7 @@ anaconda_architecture() {
   "Linux" )
     case "$(uname -m)" in
     "armv7l" ) echo "Linux-armv7l" ;;
+    "aarch64" ) echo "Linux-aarch64" ;;
     "i386" | "i486" | "i586" | "i686" | "i786" ) echo "Linux-x86" ;;
     "ppc64le" ) echo "Linux-ppc64le" ;;
     "x86_64" ) echo "Linux-x86_64" ;;
@@ -1747,6 +1757,11 @@ build_package_verify_py310() {
   build_package_verify_py39 "$1" "${2:-3.10}"
 }
 
+# Post-install check for Python 3.11.x
+build_package_verify_py311() {
+  build_package_verify_py310 "$1" "${2:-3.11}"
+}
+
 # Copy Tools/gdb/libpython.py to pythonX.Y-gdb.py (#1190)
 build_package_copy_python_gdb() {
   if [ -e "$BUILD_PATH/$1/Tools/gdb/libpython.py" ]; then
@@ -2090,22 +2105,22 @@ if [ -z "${GET_PIP_URL}" ]; then
     # Use custom get-pip URL based on the target version (#1127)
     case "${DEFINITION_PATH##*/}" in
     2.6 | 2.6.* )
-      GET_PIP_URL="https://bootstrap.pypa.io/2.6/get-pip.py"
+      GET_PIP_URL="https://bootstrap.pypa.io/pip/2.6/get-pip.py"
       ;;
     2.7 | 2.7.* )
-      GET_PIP_URL="https://bootstrap.pypa.io/2.7/get-pip.py"
+      GET_PIP_URL="https://bootstrap.pypa.io/pip/2.7/get-pip.py"
       ;;
     3.2 | 3.2.* )
-      GET_PIP_URL="https://bootstrap.pypa.io/3.2/get-pip.py"
+      GET_PIP_URL="https://bootstrap.pypa.io/pip/3.2/get-pip.py"
       ;;
     3.3 | 3.3.* )
-      GET_PIP_URL="https://bootstrap.pypa.io/3.3/get-pip.py"
+      GET_PIP_URL="https://bootstrap.pypa.io/pip/3.3/get-pip.py"
       ;;
     3.4 | 3.4.* )
-      GET_PIP_URL="https://bootstrap.pypa.io/3.4/get-pip.py"
+      GET_PIP_URL="https://bootstrap.pypa.io/pip/3.4/get-pip.py"
       ;;
     3.5 | 3.5.* )
-      GET_PIP_URL="https://bootstrap.pypa.io/3.5/get-pip.py"
+      GET_PIP_URL="https://bootstrap.pypa.io/pip/3.5/get-pip.py"
       ;;
     * )
       GET_PIP_URL="https://bootstrap.pypa.io/get-pip.py"
